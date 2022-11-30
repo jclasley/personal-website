@@ -3,11 +3,14 @@ version: '2.1'
 orbs:
   go: circleci/go@1.7.1
 
+executors:
+  go:
+    docker:
+      - image: circleci/golang:1.19
+
 jobs:
   test:
-    executor:
-      name: go/default
-      tag: '1.16'
+    executor: go
     steps:
       - checkout
       - go/load-cache
@@ -19,9 +22,7 @@ jobs:
           race: true
 
   lint:
-    executor:
-      name: go/default
-      tag: '1.16'
+    executor: go
     steps:
       - checkout
       - go/load-cache
