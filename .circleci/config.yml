@@ -14,6 +14,7 @@ jobs:
       - go/mod-download
       - go/save-cache
       - go/test:
+          covermode: atomic
           failfast: true
           race: true
 
