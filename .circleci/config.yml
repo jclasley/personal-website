@@ -6,7 +6,7 @@ orbs:
 executors:
   go:
     docker:
-      - image: circleci/golang:1.19
+      - image: cimg/golang:1.19
 
 jobs:
   test:
