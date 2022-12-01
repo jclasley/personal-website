@@ -1,0 +1,74 @@
+version: '3'
+
+vars:
+  GOPKGNAME:
+    sh: go list -m
+
+tasks:
+  default: task -l
+
+  test:
+    desc: Run the tests (optionally provide a package to test with `PKG=./pkg task test`)
+    vars:
+      PKG: '{{ .PKG | default "./..."}}'
+    cmds:
+      - cmd: go test -v {{.CLI_ARGS}} {{.PKG}}
+        silent: true
+    sources:
+      - &gofiles ./**/*.go
+
+  fmt:
+    cmds:
+      - cmd: go fmt ./...
+        silent: true
+    sources:
+      - *gofiles
+
+
+  docs:
+    desc: Generate the documentation
+    cmds:
+      - cmd: |
+          godoc&
+          sleep 1
+          echo "Docs available at http://localhost:6060/pkg/{{.GOPKGNAME}}?m=all"
+        silent: true
+
+  lint:
+    cmds:
+      - cmd: golangci-lint run -c .golangci.yml
+        silent: true
+    sources:
+      - *gofiles
+
+  pre-commit:
+    desc: Run all the pre-commit checks
+    deps:
+      - task: tidy
+        silent: true
+    cmds:
+      - task: fmt
+      - task: lint
+      - task: test
+      - cmd: echo "All checks passed!"
+        silent: true
+
+  next-run:
+    cmds:
+      - cmd: npm run build
+        silent: true
+      - cmd: npm run export
+        silent: true
+
+  run:
+    deps:
+      - next-run
+    cmds:
+      - cmd: go run ./cmd/server
+
+
+##### INTERNAL TASKS #####
+  tidy:
+    internal: true
+    cmds:
+      - go mod tidy

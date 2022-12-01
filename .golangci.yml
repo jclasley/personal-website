@@ -1,0 +1,24 @@
+#issues:
+#
+
+linters:
+  disable-all: true
+  enable:
+    - bodyclose
+    - errcheck
+    - exhaustive
+    - gofmt
+    - goconst
+    - goimports
+    - gosec
+    - gosimple
+    - govet
+    - ineffassign
+    - misspell
+    - nakedret
+    - prealloc
+    - revive
+    - staticcheck
+    - unconvert
+    - unparam
+    - unused
