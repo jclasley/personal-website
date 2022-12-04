@@ -12,18 +12,30 @@ export default function Home() {
             </Head>
 
             <main className={styles.main}>
-                hello friend.<br/>
-                <br/>
-                i'm jon. a software engineer, musician, and climbing enthusiast.<br/>
-                currently working at <a href="https://circleci.com">circleci</a>.<br/>
-                my passions are the command line and backend development.<br/>
-                <br/>
-                {/* TODO: add powered by */}
-                check out my <Link href="/blog">blog</Link>.<br/>
-                you can also read it via the terminal with <code>ssh #FILL ME IN#</code>.<br/>
-                <br/>
-                check out my <a href="github.com/jclasley">github</a>.
-                you can also read it via the terminal with <code>ssh #FILL ME IN#</code>.<br/>
+                <div className={styles.body}>
+                    <p style={{fontWeight: '500'}}>hello friend.</p>
+                    <p>
+                        i'm jon. a software engineer, musician, and climbing enthusiast.
+                        <br/>
+                        currently working at <a href="https://circleci.com">circleci</a>.
+                        <br/>
+                        my passions are the command line and backend development.
+                        <br/>
+                    </p>
+                    {/* TODO: add powered by */}
+                    <p>
+                        check out my <Link href="/blog">blog</Link>.
+                        <br/>
+                        you can also read it via the terminal with <span className={styles.code}>ssh #FILL ME IN#</span>.
+                        <br/>
+                    </p>
+                    <p>
+                        check out my <a href="github.com/jclasley">github</a>.
+                        <br/>
+                        you can also read it via the terminal with <span className={styles.code}>ssh #FILL ME IN#</span>.
+                        <br/>
+                    </p>
+                </div>
                 {/* TODO: add powered by */}
             </main>
 
@@ -33,9 +45,7 @@ export default function Home() {
                     target="_blank"
                     rel="noopener noreferrer"
                 >
-                    Powered by{' '}
-                    <span className={styles.logo}>
-          </span>
+                    Powered by NextJS
                 </a>
             </footer>
         </div>
