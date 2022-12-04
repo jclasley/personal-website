@@ -60,12 +60,13 @@ tasks:
       - cmd: npm run export
         silent: true
 
-  run:
+  run-site:
     deps:
       - next-run
     cmds:
       - cmd: go run ./cmd/server
 
+  run-wish: go run ./cmd/wish-server
 
 ##### INTERNAL TASKS #####
   tidy:
