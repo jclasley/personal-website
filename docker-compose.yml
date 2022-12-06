@@ -5,7 +5,7 @@ services:
     image: charmcli/soft-serve:latest
     container_name: soft-serve
     volumes:
-      - ~/.soft-serve:/soft-serve
+      - ~/.soft-serve-example:/soft-serve
     ports:
       - 23231:23231
     restart: unless-stopped
