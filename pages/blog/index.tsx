@@ -17,7 +17,7 @@ interface Props {
 
 export default function Blog({posts}: Props) {
     return (
-        <BlogLayout>
+        <BlogLayout prev={'home'}>
             {posts.map(post => (
                 <div key={post.id} className="post-excerpt">
                     <h1><Link href={`/blog/${post.id}/`}>{post.title}</Link></h1>

@@ -1,0 +1,16 @@
+.title {
+    font-size: 4rem;
+    font-weight: bold;
+}
+
+.date {
+    font-size: 0.8rem;
+    color: grey;
+    opacity: 0.6;
+}
+
+.body code {
+    background-color: #d4d4d4;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+}

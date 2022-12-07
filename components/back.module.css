@@ -1,0 +1,21 @@
+.container {
+    display: grid;
+    padding: 1rem;
+    grid-template: 1fr / 1fr 1fr 1fr;
+    position: absolute;
+    top: 0;
+    left: 2rem;
+}
+
+.link {
+    grid-column: 1;
+    color: #1cb5ff;
+    text-decoration: none;
+    opacity: 0.8;
+    width: fit-content;
+}
+
+.link:hover {
+    cursor: pointer;
+    opacity: 1;
+}

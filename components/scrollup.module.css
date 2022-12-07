@@ -1,0 +1,15 @@
+.bottom_right {
+    position: fixed;
+    bottom: 4rem;
+    right: 4rem;
+    z-index: 100;
+    transform: scale(1.5);
+}
+
+.show {
+    display: block;
+}
+
+.hide {
+    display: none;
+}

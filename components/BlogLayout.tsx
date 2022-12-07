@@ -1,11 +1,21 @@
 import React from "react";
-import Link from "next/link";
+import Back from "./Back";
+import styles from "./bloglayout.module.css";
+import ScrollUp from "./ScrollUp";
 
-export default function BlogLayout({ children }: React.PropsWithChildren<{}>) {
+interface Props {
+    children: React.ReactNode;
+    prev: 'blog' | 'home';
+}
+
+export default function BlogLayout({ children, prev }: Props) {
     return (
         <>
-            <Link href="/blog">Back to blog</Link>
-            {children}
+            <Back to={prev} />
+            <div className={styles.container}>
+                {children}
+            </div>
+            <ScrollUp />
         </>
     )
 }

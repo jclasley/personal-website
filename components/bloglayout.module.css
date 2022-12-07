@@ -5,6 +5,17 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    width: 60vw;
+}
+
+.container a {
+    color: #1cb5ff;
+    text-decoration: none;
+    opacity: 0.8;
+}
+
+.container a:hover {
+    opacity: 1;
 }
 
 .title {

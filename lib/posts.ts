@@ -4,6 +4,8 @@ import matter, {GrayMatterFile} from 'gray-matter';
 
 import { remark } from 'remark';
 import html from 'remark-html';
+import rehypeHighlight from "rehype-highlight";
+import { rehype } from 'rehype';
 
 const postsDirectory = path.join(process.cwd(), 'posts');
 
@@ -70,7 +72,8 @@ export async function getPostData(id: string): Promise<PostWithContent> {
     const {data, content} = matter(fileContent);
 
     const processed = await remark().use(html).process(content);
-    const processedHTML = processed.toString();
+    const syntaxHighlighted = await rehype().use(rehypeHighlight).process(processed);
+    const processedHTML = syntaxHighlighted.toString();
 
     return {
         id,
