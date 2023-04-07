@@ -4,8 +4,6 @@ date: '2022-12-06'
 description: Running a self-hosted git server locally with an eye toward deployment
 ---
 
-# Table of Contents
-
 1.  [The intro](#orge03a3f9)
 2.  [The steps](#org9614939)
     1.  [The code](#orge165c92)
@@ -44,17 +42,17 @@ soft serve git server. The theory is the same whether you use a plain ol' Docker
 
 The Soft Serve documentation provides an example `docker-compose.yml` which we are going to use almost verbatim
 ``` yaml
-     1  ---
-     2  version: "3.1"
-     3  services:
-     4    soft-serve:
-     5      image: charmcli/soft-serve:latest
-     6      container_name: soft-serve
-     7      volumes:
-     8        - /path/to/data:/soft-serve
-     9      ports:
-    10        - 23231:23231
-    11      restart: unless-stopped
+       ---
+       version: "3.1"
+       services:
+         soft-serve:
+           image: charmcli/soft-serve:latest
+           container_name: soft-serve
+           volumes:
+             - /path/to/data:/soft-serve
+           ports:
+            - 23231:23231
+          restart: unless-stopped
 ```
 
 This is a relatively simple docker-compose that spins up a container, mounts over some data, and exposes a port. We're going to change the directory of the
@@ -63,9 +61,9 @@ mount volume so that we can easily access the config file that is created on con
 When we first run this docker compose, it's going to create a config file in the container which, because of the volume mount, will also create the config file in whatever directory we pass.
 This directory is also going to end up holding information about your repos, so I would put it somewhere that is easy to remember. I opted for creating a `~/.soft-serve` directory, so
 line 8 for me appears as:
-``` yaml
-    7  volumes:
-    8    - ~/.soft-serve:/soft-serve
+```yml
+      volumes:
+        - ~/.soft-serve:/soft-serve
 ```
 
 Feel free to change the port if you want, but for the rest of this blog post I will be using `23231` as the port.
@@ -105,8 +103,10 @@ Do you see some repos? Fantastic! Play around in here as much as you want (it's 
 
 Time to push a repo. Navigate to your any project you want to push to Soft Serve. I'm going to assume you already have git initialized, so all you have to do is run the following
 
-    git remote add soft ssh://localhost:23231/<name of your repo>
-    git push soft main
+``` shell
+git remote add soft ssh://localhost:23231/<name of your repo>
+git push soft main
+```
 
 There are two ways to verify that it worked. Well, three if you count the output of the command, but I don't trust nobody and need to verify for myself.
 
@@ -115,7 +115,9 @@ ls ~/.soft-serve/repos
 ```
 You should see the `config` directory and your newly added repo directory.
 
-    ssh localhost -p 23231
+``` shell
+ssh localhost -p 23231
+```
 
 You should see the `config` repo and your newly added repo. Play around! Check out your files. Pretty sweet.
 
@@ -138,50 +140,50 @@ Navigate to the directory, then using your favorite text editor, open up `config
 
 Here's the default config that Soft Serve creates at the time of writing this:
 ``` yaml
-     1  # The name of the server to show in the TUI.
-     2  name: Soft Serve
-     3  
-     4  # The host and port to display in the TUI. You may want to change this if your
-     5  # server is accessible from a different host and/or port that what it's
-     6  # actually listening on (for example, if it's behind a reverse proxy).
-     7  host: localhost
-     8  port: 23231
-     9  
-    10  # Access level for anonymous users. Options are: admin-access, read-write,
-    11  # read-only, and no-access.
-    12  anon-access: read-write
-    13  
-    14  # You can grant read-only access to users without private keys. Any password
-    15  # will be accepted.
-    16  allow-keyless: true
-    17  
-    18  # Customize repo display in the menu.
-    19  repos:
-    20    - name: Home
-    21      repo: config
-    22      private: true
-    23      note: "Configuration and content repo for this server"
-    24      readme: README.md
-    25  
-    26  # users:
-    27  #   - name: Admin
-    28  #     admin: true
-    29  #     public-keys:
-    30  #       - ssh-ed25519 AAAA... # redacted
-    31  #       - ssh-rsa AAAAB3Nz... # redacted
-    32  #   - name: Example User
-    33  #     collab-repos:
-    34  #       - REPO
-    35  #     public-keys:
-    36  #       - ssh-ed25519 AAAA... # redacted
-    37  #       - ssh-rsa AAAAB3Nz... # redacted
+       # The name of the server to show in the TUI.
+       name: Soft Serve
+       
+       # The host and port to display in the TUI. You may want to change this if your
+       # server is accessible from a different host and/or port that what it's
+       # actually listening on (for example, if it's behind a reverse proxy).
+       host: localhost
+       port: 23231
+       
+      # Access level for anonymous users. Options are: admin-access, read-write,
+      # read-only, and no-access.
+      anon-access: read-write
+      
+      # You can grant read-only access to users without private keys. Any password
+      # will be accepted.
+      allow-keyless: true
+      
+      # Customize repo display in the menu.
+      repos:
+        - name: Home
+          repo: config
+          private: true
+          note: "Configuration and content repo for this server"
+          readme: README.md
+      
+      # users:
+      #   - name: Admin
+      #     admin: true
+      #     public-keys:
+      #       - ssh-ed25519 AAAA... # redacted
+      #       - ssh-rsa AAAAB3Nz... # redacted
+      #   - name: Example User
+      #     collab-repos:
+      #       - REPO
+      #     public-keys:
+      #       - ssh-ed25519 AAAA... # redacted
+      #       - ssh-rsa AAAAB3Nz... # redacted
 ```
 
 We're going to change the `anon-access` on line 12 so that people who are not approved users cannot write to our repos.
 For now, let's just give them `read-only` access:
 
 ``` yaml
-    12  anon-access: read-only
+      anon-access: read-only
 ```
 
 We also want to set ourself as an admin, so that we unequivocally have read-write access to every repo. When ou can we generated our ssh key, it created two files: a public key and a private key.
@@ -195,11 +197,11 @@ We can set the config value of our public key(s) so that the server can verify u
 
 You can find the value of your public key by `cat ~/.ssh/id_ed25519.pub`, then put that value into the `config.yml`. It will look something like
 ``` yaml
-    26  users:
-    27    - name: Admin
-    28      admin: true
-    29      public-keys:
-    30        - <your public key here>
+      users:
+        - name: Admin
+          admin: true
+          public-keys:
+            - <your public key here>
 ```
 
 These changes should be the bare minimum to secure your repos. Go ahead and add, commit, push. You can generate another ssh key and try and connect with that key using the `-i` flag on `ssh`

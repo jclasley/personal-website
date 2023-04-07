@@ -24,7 +24,7 @@ func main() {
 	}()
 
 	srv := &http.Server{
-		Addr:              ":8080",
+		Addr:              ":443",
 		Handler:           ServerHandler(),
 		ReadHeaderTimeout: 5 * time.Second,
 	}
@@ -32,12 +32,14 @@ func main() {
 	go func() {
 		fmt.Printf("starting server on port :%s\n", srv.Addr)
 
-		if err := srv.ListenAndServe(); err != nil {
+		if err := srv.ListenAndServeTLS("./cert.pem", "./key.pem"); err != nil {
 			if !errors.Is(err, http.ErrServerClosed) {
 				log.Printf("unexpected server error: %s\n", err.Error())
 			}
 		}
 	}()
+
+
 
 	<-ctx.Done()
 

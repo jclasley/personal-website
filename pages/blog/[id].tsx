@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import {getPostData, getPostIDs, PostWithContent} from "../../lib/posts";
 import BlogLayout from "../../components/BlogLayout";
 import styles from './blogpost.module.css';
@@ -33,6 +34,10 @@ interface Props {
 
 export default function Post({ post }: Props) {
     return (
+        <>
+        <Head>
+            <title>{post.title}</title>
+        </Head>
         <BlogLayout prev={'blog'}>
             <h1 className={styles.title}>{post.title}</h1>
             <hr/>
@@ -40,5 +45,6 @@ export default function Post({ post }: Props) {
             <hr/>
             <div className={styles.date}>{post.date}</div>
         </BlogLayout>
+</>
     );
 }

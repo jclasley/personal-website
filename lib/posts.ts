@@ -2,10 +2,15 @@ import fs from 'fs';
 import path from 'path';
 import matter, {GrayMatterFile} from 'gray-matter';
 
-import { remark } from 'remark';
+import { unified } from 'unified';
+import remarkParse from 'remark-parse';
+import remarkRehype from 'remark-rehype';
+import rehypeRaw from 'rehype-raw';
+import rehypeStringify from 'rehype-stringify';
 import html from 'remark-html';
 import rehypeHighlight from "rehype-highlight";
 import { rehype } from 'rehype';
+import codeFrontmatter from 'remark-code-frontmatter';
 
 const postsDirectory = path.join(process.cwd(), 'posts');
 
@@ -71,8 +76,13 @@ export async function getPostData(id: string): Promise<PostWithContent> {
     const fileContent = fs.readFileSync(filePath, 'utf-8');
     const {data, content} = matter(fileContent);
 
-    const processed = await remark().use(html).process(content);
-    const syntaxHighlighted = await rehype().use(rehypeHighlight).process(processed);
+    const processed = await unified()
+        .use(remarkParse)
+        .use(remarkRehype, { allowDangerousHtml: true })
+        .use(rehypeRaw) // *Parse* the raw HTML strings embedded in the tree
+        .use(rehypeStringify)
+        .process(content);
+    const syntaxHighlighted = await rehype().use(rehypeHighlight, {detect: true}).process(processed);
     const processedHTML = syntaxHighlighted.toString();
 
     return {

@@ -25,8 +25,8 @@ a {
   box-sizing: border-box;
 }
 
-code {
-  font-size: 1rem;
+code:not(.hljs) {
+  font-size: 1.2rem;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -37,4 +37,29 @@ code {
     color: white;
     background: black;
   }
+}
+
+p.highlighted-boxed-section {
+    background-color: #5adaee7a;
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 0.2rem;
+}
+
+p.technical-popout {
+    background-color: #cacacac9;
+    padding: 1rem;
+    border-radius: 0.2rem;
+}
+
+p.prereqs {
+    background-color: #f6d6d6;
+    padding: 1rem;
+    border-radius: 0.2rem;
+    text-align: center;
+    font-size: 0.8rem;
+}
+
+span.label {
+  font-size: 1.5rem;
 }
