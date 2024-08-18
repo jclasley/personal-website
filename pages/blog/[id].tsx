@@ -39,12 +39,14 @@ export default function Post({ post }: Props) {
             <title>{post.title}</title>
         </Head>
         <BlogLayout prev={'blog'}>
-            <h1 className={styles.title}>{post.title}</h1>
-            <hr/>
-            <div dangerouslySetInnerHTML={{ __html: post.content }}/>
-            <hr/>
-            <div className={styles.date}>{post.date}</div>
+            <div>
+                <h1 className={styles.title}>{post.title}</h1>
+                <hr/>
+                <div dangerouslySetInnerHTML={{__html: post.content}}/>
+                <hr/>
+                <div className={styles.date}>{post.date}</div>
+            </div>
         </BlogLayout>
-</>
+        </>
     );
 }

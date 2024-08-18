@@ -25,10 +25,6 @@ a {
   box-sizing: border-box;
 }
 
-code:not(.hljs) {
-  font-size: 1.2rem;
-}
-
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
@@ -60,6 +56,29 @@ p.prereqs {
     font-size: 0.8rem;
 }
 
+p.callout {
+    background-color: lightskyblue;
+    padding: 1rem;
+    border-radius: 0.2rem;
+    text-align: center;
+    font-size: 1rem;
+}
+
+code:not(.hljs) {
+    font-family: monospace;
+    font-size: 1rem;
+}
+
 span.label {
   font-size: 1.5rem;
+}
+
+#__next {
+    width: 100%;
+}
+
+@media (max-width: 600px) {
+    * {
+        width: 100%;
+    }
 }

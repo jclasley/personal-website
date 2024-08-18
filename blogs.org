@@ -1,0 +1,25 @@
+* Let's talk about observability
+
+Observability is the concept of seeing what's going on inside our system.
+Most of the time, we do this by writing some code that gives back meaningful data about the state of something, like an HTTP request or a CronJob.
+The often dubbed "three pillars of observability" will be the focus of this blog -- logs, traces, and metrics. Each pillar has its pros and cons, as well as patterns and anti-patterns.
+
+Examples will be written in Go, but your language of choice almost definitely has an observability package for you to play with.
+
+** Logs
+Our oldest and dearest friend, the log, is the entrypoint into observable data. There are [[https://www.reddit.com/r/ProgrammerHumor/comments/ntro76/all_the_print_statements/][countless]] [[https://www.reddit.com/r/ProgrammerHumor/comments/g0o1x3/the_holy_print_statement/][memes]] [[https://programmerhumor.io/debugging-memes/print-breakpoints/][about]] [[https://www.facebook.com/compscimeme/photos/when-you-dont-have-time-to-use-the-debugger-but-you-spend-5-hours-writing-print-/622761868096940/?paipv=0&eav=AfbGtIEgYm94oW-55vfBT9qpZ92QIKTnl2yUwiCCUrdortEOWs2tC3I7FfMc1lb_Krs&_rdr][print]] [[https://www.reddit.com/r/ProgrammerHumor/comments/9hlqyq/print_got_this_far/][statements]], highlighting the ubiquity of ~console.log~ or ~print~ or the cursed Java ~System.out.println~. These statements are often bare bones, development-only implementations that output tidbits of information at critical points of the business logic or control flow. Something like
+
+#+NAME: log
+#+BEGIN_SRC go
+fmt.Printf("found user: %v\n", user.ID)
+#+END_SRC
+
+is a classic example of a great development-level log.
+
+We know if this is called, we found a user, and we also get the user ID on screen. Perfect for when we trigger execution of the function so that we can easily inspect it. However, in production, this log is not as valuable for a couple reasons. First, we don't exactly know where this happened - there could be lots of places in our code that find users. Second, this chunk of logs will likely be surrounded by logs from other parts of the system. It would be incredibly difficult to find this simple log in a vast sea of other simple logs. So how do we reconcile having a log statement that is helpful in development but not as helpful in production?
+*** Structured logs
+
+Structured logging is the practice of assigning levels of importance to logs. Logs at lower levels are /less critical/ than logs at higher levels.
+Structured logs provide two major niceties:
+1. The level is (generally) printed along with the log
+2. Log aggregates in production can selectively exclude logs below a certain level, at either the time of search, ingestion, or both.

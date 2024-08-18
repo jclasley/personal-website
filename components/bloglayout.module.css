@@ -1,15 +1,10 @@
 .container {
-    display: flex;
     padding: 1rem;
     margin: 1rem;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    width: 60vw;
 }
 
 .container a {
-    color: #1cb5ff;
+    color: #19a0e3;
     text-decoration: none;
     opacity: 0.8;
 }
@@ -25,4 +20,16 @@
 
 .body {
     font-size: 1.2rem;
+}
+@media (max-width: 420px) {
+    .container {
+        /*max-width: 420px;*/
+        font-size: 1rem;
+        left: 0;
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin-top: 2rem;
+    }
 }

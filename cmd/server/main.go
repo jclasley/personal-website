@@ -29,6 +29,11 @@ func main() {
 		ReadHeaderTimeout: 5 * time.Second,
 	}
 
+	if _, ok := os.LookupEnv("DEV"); ok {
+		srv.Addr = ":8081"
+		panic(srv.ListenAndServe())
+	}
+
 	go func() {
 		fmt.Printf("starting server on port :%s\n", srv.Addr)
 
@@ -38,8 +43,6 @@ func main() {
 			}
 		}
 	}()
-
-
 
 	<-ctx.Done()
 

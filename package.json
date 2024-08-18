@@ -10,8 +10,6 @@
     "export": "next export -o ./out"
   },
   "dependencies": {
-    "@types/node": "18.11.10",
-    "@types/react": "18.0.25",
     "@types/react-dom": "18.0.9",
     "eslint": "8.28.0",
     "eslint-config-next": "13.0.5",
@@ -28,7 +26,11 @@
     "remark-html": "^15.0.1",
     "remark-parse": "^10.0.1",
     "remark-rehype": "^10.1.0",
-    "typescript": "4.9.3",
     "unified": "^10.1.2"
+  },
+  "devDependencies": {
+    "@types/node": "20.12.12",
+    "@types/react": "18.3.3",
+    "typescript": "5.4.5"
   }
 }

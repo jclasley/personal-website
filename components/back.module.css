@@ -1,10 +1,7 @@
 .container {
     display: grid;
-    padding: 1rem;
     grid-template: 1fr / 1fr 1fr 1fr;
-    position: absolute;
-    top: 0;
-    left: 2rem;
+	margin-bottom: 1rem;
 }
 
 .link {
@@ -18,4 +15,10 @@
 .link:hover {
     cursor: pointer;
     opacity: 1;
+}
+
+@media (max-width: 400px) {
+    .container {
+        z-index: 99;
+    }
 }

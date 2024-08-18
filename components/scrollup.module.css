@@ -13,3 +13,9 @@
 .hide {
     display: none;
 }
+
+@media (max-width: 600px) {
+   .bottom_right {
+       display: none;
+   }
+}

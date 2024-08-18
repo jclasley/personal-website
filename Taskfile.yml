@@ -68,6 +68,9 @@ tasks:
 
   run-wish: go run ./cmd/wish-server
 
+  docker-build: docker build -t jclasley/website --platform linux/amd64 .
+  docker-push: docker push jclasley/website
+
 ##### INTERNAL TASKS #####
   tidy:
     internal: true
